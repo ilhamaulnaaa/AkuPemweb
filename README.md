@@ -5,7 +5,7 @@
 ## Quick Start 
 clone the repo
 ```
-    git clone https://github.com/Pfftz/AkuPemweb.git
+git clone https://github.com/Pfftz/AkuPemweb.git
 ```
 
 change current directory
@@ -19,7 +19,7 @@ composer install
 ````
 install js dependencies
 ```
-npm install && npm run dev
+npm install
 ````
 create .env file
 ```
