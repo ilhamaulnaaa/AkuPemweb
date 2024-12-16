@@ -67,7 +67,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <span>© Copyright {{ now()->format("Y") }} <a href="https://www.yahoobaba.net">YahooBaba 😎</a></span>
+                    <span>Aku Suka Femboy 😎</span>
                 </div>
             </div>
         </div>
