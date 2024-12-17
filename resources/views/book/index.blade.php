@@ -8,7 +8,7 @@
                     <h2 class="admin-heading">All Books</h2>
                 </div>
                 <div class="offset-md-7 col-md-2">
-                    <a class="add-new" href="{{ route('book.create') }}">Add Book</a>
+                    <a class="add-new" href="{{ route('books.create') }}">Add Book</a>
                 </div>
             </div>
             <div class="row">
@@ -41,10 +41,10 @@
                                         @endif
                                     </td>
                                     <td class="edit">
-                                        <a href="{{ route('book.edit', $book) }}" class="btn btn-success">Edit</a>
+                                        <a href="{{ route('books.edit', $book) }}" class="btn btn-success">Edit</a>
                                     </td>
                                     <td class="delete">
-                                        <form action="{{ route('book.destroy', $book) }}" method="post"
+                                        <form action="{{ route('books.destroy', $book) }}" method="post"
                                             class="form-hidden">
                                             <button class="btn btn-danger delete-book">Delete</button>
                                             @csrf

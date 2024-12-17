@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\book;
 use App\Http\Requests\StorebookRequest;
 use App\Http\Requests\UpdatebookRequest;
+use Illuminate\Support\Facades\Storage;
 use App\Models\auther;
 use App\Models\category;
 use App\Models\publisher;
@@ -18,7 +19,6 @@ class BookController extends Controller
      */
     public function index()
     {
-
         return view('book.index', [
             'books' => book::Paginate(5)
         ]);
@@ -31,7 +31,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('book.create',[
+        return view('book.create', [
             'authors' => auther::latest()->get(),
             'publishers' => publisher::latest()->get(),
             'categories' => category::latest()->get(),
@@ -46,12 +46,18 @@ class BookController extends Controller
      */
     public function store(StorebookRequest $request)
     {
-        book::create($request->validated() + [
+        $data = $request->validated();
+
+        if ($request->hasFile('cover_image')) {
+            $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
+        }
+
+        book::create($data + [
             'status' => 'Y'
         ]);
-        return redirect()->route('books');
-    }
 
+        return redirect()->route('books.index')->with('success', 'Book added successfully.');
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -61,7 +67,7 @@ class BookController extends Controller
      */
     public function edit(book $book)
     {
-        return view('book.edit',[
+        return view('book.edit', [
             'authors' => auther::latest()->get(),
             'publishers' => publisher::latest()->get(),
             'categories' => category::latest()->get(),
@@ -76,15 +82,23 @@ class BookController extends Controller
      * @param  \App\Models\book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatebookRequest $request, $id)
+    public function update(UpdatebookRequest $request, book $book)
     {
-        $book = book::find($id);
-        $book->name = $request->name;
-        $book->auther_id = $request->author_id;
-        $book->category_id = $request->category_id;
-        $book->publisher_id = $request->publisher_id;
-        $book->save();
-        return redirect()->route('books');
+        $data = $request->validated();
+
+        if ($request->hasFile('cover_image')) {
+            // Delete old image if exists
+            if ($book->cover_image && Storage::disk('public')->exists($book->cover_image)) {
+                Storage::disk('public')->delete($book->cover_image);
+            }
+
+            // Store new image
+            $data['cover_image'] = $request->file('cover_image')->store('covers', 'public');
+        }
+
+        $book->update($data);
+
+        return redirect()->route('books.index')->with('success', 'Book updated successfully.');
     }
 
     /**
@@ -93,9 +107,14 @@ class BookController extends Controller
      * @param  \App\Models\book  $book
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(book $book)
     {
-        book::find($id)->delete();
-        return redirect()->route('books');
+        if ($book->cover_image && Storage::disk('public')->exists($book->cover_image)) {
+            Storage::disk('public')->delete($book->cover_image);
+        }
+
+        $book->delete();
+
+        return redirect()->route('books.index')->with('success', 'Book deleted successfully.');
     }
 }

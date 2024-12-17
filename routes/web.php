@@ -10,6 +10,7 @@ use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController; // Add this line
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -33,8 +34,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('change-password',[dashboardController::class,'change_password_view'])->name('change_password_view');
-    Route::post('change-password',[dashboardController::class,'change_password'])->name('change_password');
+    Route::get('change-password', [dashboardController::class, 'change_password_view'])->name('change_password_view');
+    Route::post('change-password', [dashboardController::class, 'change_password'])->name('change_password');
     Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard');
 
     // author CRUD
@@ -61,16 +62,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/category/delete/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     Route::post('/category/create', [CategoryController::class, 'store'])->name('category.store');
 
-
-
-
     // books CRUD
-    Route::get('/books', [BookController::class, 'index'])->name('books');
-    Route::get('/book/create', [BookController::class, 'create'])->name('book.create');
-    Route::get('/book/edit/{book}', [BookController::class, 'edit'])->name('book.edit');
-    Route::post('/book/update/{id}', [BookController::class, 'update'])->name('book.update');
-    Route::post('/book/delete/{id}', [BookController::class, 'destroy'])->name('book.destroy');
-    Route::post('/book/create', [BookController::class, 'store'])->name('book.store');
+    Route::resource('books', BookController::class);
 
     // students CRUD
     Route::get('/students', [StudentController::class, 'index'])->name('students');
@@ -80,8 +73,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/student/delete/{id}', [StudentController::class, 'destroy'])->name('student.destroy');
     Route::post('/student/create', [StudentController::class, 'store'])->name('student.store');
     Route::get('/student/show/{id}', [StudentController::class, 'show'])->name('student.show');
-
-
 
     Route::get('/book_issue', [BookIssueController::class, 'index'])->name('book_issued');
     Route::get('/book-issue/create', [BookIssueController::class, 'create'])->name('book_issue.create');
@@ -99,4 +90,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
     Route::post('/settings', [SettingsController::class, 'update'])->name('settings');
+});
+
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::get('/user/books', [UserController::class, 'books'])->name('user.books');
+    Route::post('/user/borrow/{book}', [UserController::class, 'borrow'])->name('user.borrow');
 });

@@ -28,6 +28,7 @@ class StorebookRequest extends FormRequest
             'category_id' => 'required',
             'auther_id' => 'required',
             'publisher_id' => 'required',
+            'cover_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }
