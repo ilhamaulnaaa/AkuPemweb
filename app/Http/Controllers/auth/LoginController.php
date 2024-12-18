@@ -17,7 +17,12 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-            return redirect('/dashboard');
+            $user = Auth::user();
+            if ($user->role == 'admin') {
+                return redirect('/dashboard');
+            } elseif ($user->role == 'anggota') {
+                return redirect('/home');
+            }
         } else {
             return redirect()->back()->withErrors(['username' => 'Invalid username or password']);
         }

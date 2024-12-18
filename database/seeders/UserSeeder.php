@@ -14,7 +14,8 @@ class UserSeeder extends Seeder
     public function run()
     {
         if (\App\Models\User::count() == 0) {
-            \App\Models\User::factory(1)->create();
+            \App\Models\User::factory()->create(); // Admin user
+            \App\Models\User::factory()->anggota()->create(); // Anggota user
         }
     }
 }

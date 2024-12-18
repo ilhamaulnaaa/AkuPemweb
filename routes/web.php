@@ -92,7 +92,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings', [SettingsController::class, 'update'])->name('settings');
 });
 
-Route::middleware(['auth', 'role:student'])->group(function () {
-    Route::get('/user/books', [UserController::class, 'books'])->name('user.books');
-    Route::post('/user/borrow/{book}', [UserController::class, 'borrow'])->name('user.borrow');
+Route::middleware(['auth', 'role:anggota'])->group(function () {
+    Route::get('/home', [UserController::class, 'home'])->name('user.home');
+    Route::get('/search', [UserController::class, 'search'])->name('user.search');
+    Route::post('/borrow/{book}', [UserController::class, 'borrow'])->name('user.borrow');
+    Route::get('/my-books', [UserController::class, 'myBooks'])->name('user.myBooks');
+    Route::post('/return/{id}', [UserController::class, 'returnBook'])->name('user.return');
 });
