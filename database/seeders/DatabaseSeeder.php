@@ -13,10 +13,10 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             AutherSeeder::class,
             PublisherSeeder::class,
+            StudentSeeder::class,      // Ensure this runs before BookIssueSeeder
             BookSeeder::class,
-            BookIssueSeeder::class,
+            BookIssueSeeder::class,    // Now runs after StudentSeeder
             SettingsSeeder::class,
-            StudentSeeder::class,
         ]);
     }
 }

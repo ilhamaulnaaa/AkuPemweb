@@ -33,4 +33,9 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function student()
+    {
+        return $this->hasOne(Student::class, 'username', 'username');
+    }
+
 }

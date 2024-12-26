@@ -2,27 +2,24 @@
 
 namespace Database\Factories;
 
+use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class studentFactory extends Factory
+class StudentFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
+    protected $model = Student::class;
+
     public function definition()
     {
-        $gender = ['male', 'female'];
         return [
             'name' => $this->faker->name,
-            'age' => random_int(18, 80),
-            'gender' => $gender[random_int(0, 1)],
-            'email' => $this->faker->safeEmail,
+            'age' => $this->faker->numberBetween(18, 30),
+            'gender' => $this->faker->randomElement(['male', 'female']),
+            'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->phoneNumber,
             'address' => $this->faker->address,
-            'class' => $this->faker->sentence(3),
-            'username' => null, // Will be set in Seeder
+            'class' => $this->faker->word,
+            'username' => $this->faker->unique()->userName, // This will be overridden in Seeder
         ];
     }
 }
