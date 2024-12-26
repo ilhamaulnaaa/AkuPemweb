@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\student;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class StudentSeeder extends Seeder
@@ -14,8 +14,13 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        if (student::count() == 0) {
-            student::factory(19)->create();
+        $anggotaUsers = User::where('role', 'anggota')->get();
+
+        foreach ($anggotaUsers as $user) {
+            \App\Models\Student::factory()->create([
+                'username' => $user->username,
+                // other student fields...
+            ]);
         }
     }
 }

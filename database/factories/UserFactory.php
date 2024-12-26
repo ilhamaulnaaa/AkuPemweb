@@ -19,14 +19,4 @@ class UserFactory extends Factory
             'role' => 'admin',
         ];
     }
-
-    public function anggota()
-    {
-        return $this->state([
-            'name' => 'Anggota Dummy',
-            'username' => 'anggota',
-            'password' => Hash::make('password'),
-            'role' => 'anggota',
-        ]);
-    }
 }

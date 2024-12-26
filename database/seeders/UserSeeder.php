@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -15,7 +16,42 @@ class UserSeeder extends Seeder
     {
         if (\App\Models\User::count() == 0) {
             \App\Models\User::factory()->create(); // Admin user
-            \App\Models\User::factory()->anggota()->create(); // Anggota user
+
+            // Create five Anggota users with known usernames
+            \App\Models\User::factory()->create([
+                'name' => 'Jokowi Diddy',
+                'username' => 'jokowi',
+                'password' => Hash::make('password1'),
+                'role' => 'anggota',
+            ]);
+
+            \App\Models\User::factory()->create([
+                'name' => 'fufufafa',
+                'username' => 'gibran',
+                'password' => Hash::make('password2'),
+                'role' => 'anggota',
+            ]);
+
+            \App\Models\User::factory()->create([
+                'name' => 'ppn 12%',
+                'username' => 'srimulyani',
+                'password' => Hash::make('password3'),
+                'role' => 'anggota',
+            ]);
+
+            \App\Models\User::factory()->create([
+                'name' => 'Om Gemoy',
+                'username' => 'prabowo',
+                'password' => Hash::make('password4'),
+                'role' => 'anggota',
+            ]);
+
+            \App\Models\User::factory()->create([
+                'name' => 'Si Ahok',
+                'username' => 'ahok',
+                'password' => Hash::make('password5'),
+                'role' => 'anggota',
+            ]);
         }
     }
 }

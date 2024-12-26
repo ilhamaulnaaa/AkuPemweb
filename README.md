@@ -7,16 +7,14 @@ clone the repo
 ```
 git clone https://github.com/Pfftz/AkuPemweb.git
 ```
-
 change current directory
-
 ```
 cd Laravel-libraray-management-system
 ```
 install dependencies
 ```
 composer install
-````
+```
 install js dependencies
 ```
 npm install
@@ -29,6 +27,10 @@ generate env key
 ```
 php artisan key:generate
 ```
+Create Database named "perpus"
+```
+CREATE DATABASE perpus;
+```
 migrate the migration and seed the database
 ```
 php artisan migrate:fresh --seed
@@ -39,6 +41,10 @@ php artisan serve
 ```
 credentails
 ```
+Admin
 username: akusigma
 password: password
+User
+username => anggota
+password => password
 ```
