@@ -44,7 +44,26 @@ credentails
 Admin
 username: akusigma
 password: password
+
 User
-username => anggota
-password => password
+Anggota 1
+'name' => 'el laravel',
+'username' => 'royan',
+'password' => Hash::make('password1'),
+Anggota 2
+'name' => 'fufufafa',
+'username' => 'gibran',
+'password' => Hash::make('password2'),
+Anggota 3
+'name' => 'ppn 12%',
+'username' => 'srimulyani',
+'password' => Hash::make('password3'),
+Anggota 4
+'name' => 'Om Gemoy',
+'username' => 'prabowo',
+'password' => Hash::make('password4'),
+Anggota 5
+'name' => 'Si Ahok',
+'username' => 'ahok',
+'password' => Hash::make('password5'),
 ```

@@ -19,8 +19,8 @@ class UserSeeder extends Seeder
 
             // Create five Anggota users with known usernames
             \App\Models\User::factory()->create([
-                'name' => 'Jokowi Diddy',
-                'username' => 'jokowi',
+                'name' => 'el royan',
+                'username' => 'royan',
                 'password' => Hash::make('password1'),
                 'role' => 'anggota',
             ]);
