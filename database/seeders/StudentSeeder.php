@@ -3,23 +3,20 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Student;
 use Illuminate\Database\Seeder;
 
 class StudentSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $anggotaUsers = User::where('role', 'anggota')->get();
 
         foreach ($anggotaUsers as $user) {
-            \App\Models\Student::factory()->create([
+            Student::factory()->create([
                 'username' => $user->username,
-                // other student fields...
+                'name' => $user->name,
+                // Assign other necessary fields or use factory defaults
             ]);
         }
     }

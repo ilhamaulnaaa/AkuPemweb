@@ -99,3 +99,9 @@ Route::middleware(['auth', 'role:anggota'])->group(function () {
     Route::get('/my-books', [UserController::class, 'myBooks'])->name('user.myBooks');
     Route::post('/return/{id}', [UserController::class, 'returnBook'])->name('user.return');
 });
+
+Route::group(['middleware' => ['auth', 'anggota']], function () {
+    Route::post('/borrow/{book}', [UserController::class, 'borrow'])->name('user.borrow');
+    Route::get('/my-books', [UserController::class, 'myBooks'])->name('user.myBooks');
+    // Other anggota routes...
+});

@@ -21,14 +21,23 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'Book is not available.');
         }
 
+        // Retrieve the associated student
+        $student = Auth::user()->student;
+
+        if (!$student) {
+            return redirect()->back()->with('error', 'Student profile not found.');
+        }
+
+        // Create the book issue record
         book_issue::create([
-            'student_id' => Auth::id(),
+            'student_id' => $student->id,
             'book_id' => $book->id,
             'issue_date' => now(),
             'return_date' => now()->addDays(14),
             'issue_status' => 'N',
         ]);
 
+        // Update the book's status
         $book->update(['status' => 'N']);
 
         return redirect()->route('user.home')->with('success', 'Book borrowed successfully.');
@@ -54,7 +63,14 @@ class UserController extends Controller
 
     public function myBooks()
     {
-        $bookIssues = book_issue::where('student_id', Auth::id())
+        // Retrieve the associated student
+        $student = Auth::user()->student;
+
+        if (!$student) {
+            return redirect()->back()->with('error', 'Student profile not found.');
+        }
+
+        $bookIssues = book_issue::where('student_id', $student->id)
             ->with('book')
             ->get();
 
